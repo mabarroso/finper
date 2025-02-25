@@ -17,3 +17,9 @@ docker exec -it finper-www-1 /bin/bash
 docker exec -it finper-db-1 /bin/bash
 ```
 
+
+### Run all tests
+
+```bash
+docker exec -it finper-www-1 "/usr/local/bin/php bin/phpunit --configuration phpunit.xml.dist --testsuite ci"
+```
