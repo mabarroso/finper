@@ -1,0 +1,34 @@
+# https://github.com/JetBrains/phpstorm-docker-images
+version: '3.2'
+services:
+  db:
+    image: mysql:9.2
+    restart: always
+    expose:
+      - '3306'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./var/db/mysql:/var/lib/mysql:rw
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: finper
+      MYSQL_USER: finper
+      MYSQL_PASSWORD: finper
+
+  www:
+    depends_on:
+      - db
+    build: ./docker/php-82-apache-xdebug-32
+    working_dir: /var/www/finper
+    expose:
+      - "9000"
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/finper
+    environment:
+      PHP_XDEBUG_ENABLED: 1
+      #change the line below with your IP address
+      XDEBUG_CONFIG: remote_host=172.23.4.32
+      PHP_IDE_CONFIG: "serverName=localhost_9000"
