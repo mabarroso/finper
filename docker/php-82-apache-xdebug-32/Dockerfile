@@ -24,4 +24,3 @@ RUN echo 'xdebug.show_error_trace = 1' >> /usr/local/etc/php/conf.d/docker-php-e
 RUN echo 'xdebug.max_nesting_level=250' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo 'xdebug.var_display_max_depth=10' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo 'xdebug.log=/var/log/xdebug.log' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-
