@@ -21,6 +21,82 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Home V1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/api/v1",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/api/v1/accounts",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Revenue Categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/api/v1/revenue/categories",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"revenue",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Revenues",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/api/v1/revenues",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"revenues"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

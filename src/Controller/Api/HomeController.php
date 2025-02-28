@@ -8,11 +8,19 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
 {
-	#[Route('/api/', name: 'app_api_home', methods: ['GET'])]
+	#[Route('/api/', methods: ['GET'])]
     public function index(): JsonResponse
     {
         return $this->json([
-            'message' => 'FinPer API v1.0'
+            'message' => 'FinPer API'
         ]);
     }
+
+	#[Route('/api/v1/', methods: ['GET'])]
+	public function indexV1(): JsonResponse
+	{
+		return $this->json([
+			'message' => 'FinPer API v1.0'
+		]);
+	}
 }
