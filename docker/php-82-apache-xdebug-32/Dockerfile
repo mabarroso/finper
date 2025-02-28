@@ -2,7 +2,7 @@ FROM php:8.2-apache
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN apt-get update && apt-get -y install libzip-dev libicu-dev wget git
 RUN docker-php-ext-install zip intl
-RUN apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo pdo_pgsql
+RUN apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo pdo_mysql
 RUN pecl install xdebug-3.2.0
 RUN docker-php-ext-enable xdebug
 RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/php.ini

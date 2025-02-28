@@ -1,0 +1,26 @@
+{
+	"info": {
+		"_postman_id": "88671752-107a-49d0-810d-f07c778f5825",
+		"name": "FinPer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/api",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
