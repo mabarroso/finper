@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS finper; GRANT ALL PRIVILEGES ON finper.* TO 'finper'@'%';
+CREATE DATABASE IF NOT EXISTS finper_test; GRANT ALL PRIVILEGES ON finper_test.* TO 'finper'@'%';

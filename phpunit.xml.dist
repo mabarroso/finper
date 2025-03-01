@@ -20,9 +20,12 @@
     <testsuites>
         <testsuite name="ci">
             <directory>tests</directory>
+            <exclude>tests/External</exclude>
+            <exclude>tests/E2E</exclude>
         </testsuite>
-        <testsuite name="Api">
-            <directory>tests/Controller/Api</directory>
+
+        <testsuite name="functional">
+            <directory>tests/Functional</directory>
         </testsuite>
     </testsuites>
 
