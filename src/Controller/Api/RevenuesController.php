@@ -4,12 +4,11 @@ namespace App\Controller\Api;
 
 use App\Entity\Revenue;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class RevenuesController extends AbstractController
+final class RevenuesController extends AbstractAuthBaseController
 {
 	private EntityManagerInterface $entityManager;
 
