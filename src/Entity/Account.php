@@ -14,7 +14,10 @@ class Account
     private ?int $id = null;
 
     #[ORM\Column(length: 10)]
-    private ?string $Name = null;
+    private ?string $name = null;
+
+    #[ORM\Column(length: 24, nullable: true)]
+    private ?string $iban = null;
 
     public function getId(): ?int
     {
@@ -23,12 +26,24 @@ class Account
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): static
+    public function setName(string $name): static
     {
-        $this->Name = $Name;
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getIban(): ?string
+    {
+        return $this->iban;
+    }
+
+    public function setIban(?string $iban): static
+    {
+        $this->iban = $iban;
 
         return $this;
     }

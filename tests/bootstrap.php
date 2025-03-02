@@ -13,13 +13,25 @@ if ($_SERVER['APP_DEBUG']) {
 }
 
 passthru(sprintf(
-	'APP_ENV=%s php "%s/../bin/console" doctrine:database:create',
+	'APP_ENV=%s php "%s/../bin/console" doctrine:database:create -q',
 	$_ENV['APP_ENV'],
 	__DIR__
 ));
 
 passthru(sprintf(
-	'APP_ENV=%s php "%s/../bin/console" doctrine:schema:create',
+	'APP_ENV=%s php "%s/../bin/console" doctrine:schema:drop --force -q',
+	$_ENV['APP_ENV'],
+	__DIR__
+));
+
+passthru(sprintf(
+	'APP_ENV=%s php "%s/../bin/console" doctrine:schema:create -q',
+	$_ENV['APP_ENV'],
+	__DIR__
+));
+
+passthru(sprintf(
+	'APP_ENV=%s php "%s/../bin/console" doctrine:fixtures:load -n -q',
 	$_ENV['APP_ENV'],
 	__DIR__
 ));
