@@ -150,11 +150,61 @@ final class AccountsControllerTest extends ApiTestCase
 
 	public function testUpdate_ok(): void
 	{
-		self::markTestSkipped('To implement ');
+		$client = self::createClient();
+		$entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+		// Create test account
+		{
+			$account = new Account();
+			$account->setName('To update');
+			$account->setIban('1234');
+			$entityManager->persist($account);
+			$entityManager->flush();
+		}
+
+		// Test
+		{
+			$client->request('PUT', '/api/v1/accounts/' . $account->getId(), [], [], ['CONTENT_TYPE' => 'application/json'],
+				'{"name": "updated","iban": "5678"}'
+			);
+
+			self::assertResponseStatusCodeSame(200);
+			self::assertResponseHeaderSame('content-type', 'application/json');
+			self::assertJsonEquals(
+				'{"status":"ok","message":"Updated"}',
+				$client->getResponse()->getContent());
+
+			$accounts = $entityManager->getRepository(Account::class)->findBy(["name" => "updated", "iban" => "5678"]);
+			self::assertEquals(1, count($accounts), "Account not updated");
+		}
 	}
 
 	public function testDestroy_ok(): void
 	{
-		self::markTestSkipped('To implement ');
+		$client = self::createClient();
+		$entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+		// Create test account
+		{
+			$account = new Account();
+			$account->setName('To delete');
+			$account->setIban('1234');
+			$entityManager->persist($account);
+			$entityManager->flush();
+		}
+
+		// Test
+		{
+			$client->request('DELETE', '/api/v1/accounts/' . $account->getId(), [], [], []);
+
+			self::assertResponseStatusCodeSame(200);
+			self::assertResponseHeaderSame('content-type', 'application/json');
+			self::assertJsonEquals(
+				'{"status":"ok","message":"Deleted"}',
+				$client->getResponse()->getContent());
+
+			$accounts = $entityManager->getRepository(Account::class)->findBy(["name" => "To delete", "iban" => "1234"]);
+			self::assertEquals(0, count($accounts), "Account not deleted");
+		}
 	}
 }
