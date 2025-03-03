@@ -3,7 +3,6 @@
 namespace App\Tests\Functional\Controller\Api;
 
 use App\Entity\Account;
-use PHPUnit\Framework\ExpectationFailedException;
 
 final class AccountsControllerTest extends ApiTestCase
 {
