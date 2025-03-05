@@ -33,4 +33,12 @@ abstract class AbstractBaseController extends AbstractController
 		return $this->json($data, Response::HTTP_CONFLICT);
 	}
 
+	protected function errorForbiddenResponse(string $code = 'a381a51c58c12a9a', array $data = []): JsonResponse
+	{
+		$data['status'] = 'error';
+		$data['code'] = $code;
+		$data['message'] = $data['message'] ?? 'Forbidden';
+		return $this->json($data, Response::HTTP_FORBIDDEN);
+	}
+
 }

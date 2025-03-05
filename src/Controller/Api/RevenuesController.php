@@ -2,7 +2,7 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Revenue;
+use Aaccountspp\Entity\Revenue;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
