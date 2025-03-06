@@ -12,7 +12,13 @@
 					"name": "Accounts",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "TOKEN",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "localhost/api/v1/accounts",
 							"host": [
@@ -22,6 +28,13 @@
 								"api",
 								"v1",
 								"accounts"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -31,7 +44,13 @@
 					"name": "Accounts show",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "TOKEN",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "localhost/api/v1/accounts/2/",
 							"host": [
@@ -52,7 +71,13 @@
 					"name": "Accounts create",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "TOKEN",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"name\": \"bank 3\",\n  \"iban\": \"*9876\"\n}",
@@ -80,7 +105,13 @@
 					"name": "Accounts update",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "TOKEN",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"name\": \"bank 2 upd\",\n  \"iban\": \"*9876 updated\"\n}",
@@ -109,7 +140,13 @@
 					"name": "Accounts destroy",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "TOKEN",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "localhost/api/v1/accounts/2",
 							"host": [
@@ -166,7 +203,13 @@
 			"name": "Revenue Categories",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "TOKEN",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "localhost/api/v1/revenue/categories",
 					"host": [
@@ -186,7 +229,13 @@
 			"name": "Revenues",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "TOKEN",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "localhost/api/v1/revenues",
 					"host": [
@@ -200,6 +249,82 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();",
+							"pm.collectionVariables.set(\"TOKEN\", response.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"demo@mailinator.com\",\n  \"password\": \"demo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/api/v1/auth/login",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "TOKEN",
+			"value": ""
 		}
 	]
 }

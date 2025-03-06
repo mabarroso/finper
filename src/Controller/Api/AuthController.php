@@ -34,18 +34,20 @@ final class AuthController extends AbstractAuthBaseController
 		if ($passwordHasher->isPasswordValid($user, $dto->password)) {
 			$date = date_create(date('Y-m-d'));
 			$timestamp = date_add($date, date_interval_create_from_date_string('1 days'));
+			$expiration = strtotime($timestamp->format('Y-m-d'));
+
 			$payload = [
 				'iss' => $request->getUriForPath(""),
 				'aud' => $user->getId(),
 				'iat' => time(),
-				'exp' => strtotime($timestamp->format('Y-m-d'))
+				'exp' => $expiration
 			];
 
-			$jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS512');
+			$apiToken = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS512');
 			return $this->json(
 				[
 					'id'    => $user->getId(),
-					'token' => $jwt
+					'token' => $apiToken
 				], Response::HTTP_OK);
 		} else {
 			return $this->errorForbiddenResponse('30948930db39649a');

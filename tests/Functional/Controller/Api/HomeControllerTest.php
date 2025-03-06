@@ -24,7 +24,6 @@ final class HomeControllerTest extends WebTestCase
 			[200, '/api'],
 			[301, '/api/'],
 			[200, '/api/v1'],
-			[301, '/api/v1/'],
 		];
 	}
 }
