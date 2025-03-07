@@ -7,11 +7,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 readonly class AccountDto
 {
 	public function __construct(
-		#[Assert\NotBlank(message: 'Cannot be empty')]
+		#[Assert\NotBlank(message: 'Name cannot be empty')]
 		#[Assert\Length(
 			min: 1,
 			max: 10,
-			minMessage: 'Cannot be empty',
+			minMessage: 'Name cannot be empty',
 			maxMessage: 'Name cannot be longer than {{ limit }} characters length',
 		)]
 		#[Assert\Type('string')]
@@ -19,7 +19,7 @@ readonly class AccountDto
 
 		#[Assert\Length(
 			max: 24,
-			maxMessage: 'Name cannot be longer than {{ limit }} characters length',
+			maxMessage: 'Iban cannot be longer than {{ limit }} characters length',
 		)]
 		#[Assert\Type('string')]
 		public ?string $iban,

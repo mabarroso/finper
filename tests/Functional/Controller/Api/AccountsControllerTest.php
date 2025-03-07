@@ -3,6 +3,7 @@
 namespace App\Tests\Functional\Controller\Api;
 
 use App\Entity\Account;
+use Symfony\Component\HttpFoundation\Response;
 
 final class AccountsControllerTest extends ApiTestCase
 {
@@ -78,7 +79,7 @@ final class AccountsControllerTest extends ApiTestCase
 				'{"name": "bank 1","iban": "*1234"}'
 			);
 
-			self::assertResponseStatusCodeSame(409);
+			self::assertResponseStatusCodeSame(Response::HTTP_CONFLICT);
 			self::assertResponseHeaderSame('content-type', 'application/json');
 			self::assertJsonEquals(
 				'{"status":"error","code":"a8eaf194fa45ee07","message":"Conflict"}',
@@ -92,22 +93,39 @@ final class AccountsControllerTest extends ApiTestCase
 	public function create_bad_dataProvider(): array
 	{
 		return [
-			["name" => null, "iban" => "*XXXX"],
-			["name" => 'Bank X', "iban" => null],
-			["name" => null, "iban" => null],
-			["name" => '123456789012345678901234567890', "iban" => "*XXXX"],
-			["name" => 'Bank X', "iban" => "*123456789012345678901234567890"],
-			["name" => 'Bank X', "iban" => "*XXXX"],
+			['expectedCreated'    => false,
+			 'expectedStatusCode' => Response::HTTP_UNPROCESSABLE_ENTITY,
+			 'expectedData'       => '{"status":"error","code":"2ccd7f275e20fbd9fb01","message":"Name cannot be empty"}',
+			 "name"               => null, "iban" => "*XXXX"],
+			['expectedCreated'    => true,
+			 'expectedStatusCode' => Response::HTTP_CREATED,
+			 'expectedData'       => '{"status":"ok","message":"Created"}',
+			 "name"               => 'Bank X', "iban" => null],
+			['expectedCreated'    => false,
+			 'expectedStatusCode' => Response::HTTP_UNPROCESSABLE_ENTITY,
+			 'expectedData'       => '{"status":"error","code":"2ccd7f275e20fbd9fb01","message":"Name cannot be empty"}',
+			 "name" => null, "iban" => null],
+			['expectedCreated'    => false,
+			 'expectedStatusCode' => Response::HTTP_UNPROCESSABLE_ENTITY,
+			 'expectedData'       => '{"status":"error","code":"2ccd7f275e20fbd9fb01","message":"Name cannot be longer than 10 characters length"}',
+			 "name" => '123456789012345678901234567890', "iban" => "*XXXX"],
+			['expectedCreated'    => false,
+			 'expectedStatusCode' => Response::HTTP_UNPROCESSABLE_ENTITY,
+			 'expectedData'       => '{"status":"error","code":"2ccd7f275e20fbd9fb01","message":"Iban cannot be longer than 24 characters length"}',
+			 "name" => 'Bank X', "iban" => "*123456789012345678901234567890"],
+			['expectedCreated'    => true,
+			 'expectedStatusCode' => Response::HTTP_CREATED,
+			 'expectedData'       => '{"status":"ok","message":"Created"}',
+			 "name" => 'Bank X', "iban" => "*XXXX"],
 		];
 	}
+
 
 	/**
 	 * @dataProvider create_bad_dataProvider
 	 */
-	public function testCreate_bad_data(?string $name, ?string $iban): void
+	public function testCreate_bad_data(bool $expectedCreated, int $expectedStatusCode, string $expectedData, ?string $name, ?string $iban): void
 	{
-		self::markTestSkipped('TODO Return validation results correctly');
-
 		// Account exist
 		{
 			$accounts = $this->getEntityManager()->getRepository(Account::class)->findBy(["name" => $name, "iban" => $iban]);
@@ -125,14 +143,14 @@ final class AccountsControllerTest extends ApiTestCase
 				$requestJson
 			);
 
-			self::assertResponseStatusCodeSame(409);
+			self::assertResponseStatusCodeSame($expectedStatusCode);
 			self::assertResponseHeaderSame('content-type', 'application/json');
 			self::assertJsonEquals(
-				'{"status":"error","code":"a8eaf194fa45ee07","message":"Conflict"}',
+				$expectedData,
 				$this->getBrowserClient()->getResponse()->getContent());
 
 			$accounts = $this->getEntityManager()->getRepository(Account::class)->findBy(["name" => $name, "iban" => $iban]);
-			self::assertEquals(0, count($accounts), "Account not created");
+			self::assertEquals($expectedCreated ? 1 : 0, count($accounts), "Account not created");
 		}
 	}
 
@@ -153,7 +171,7 @@ final class AccountsControllerTest extends ApiTestCase
 				'{"name": "updated","iban": "5678"}'
 			);
 
-			self::assertResponseStatusCodeSame(200);
+			self::assertResponseStatusCodeSame(Response::HTTP_OK);
 			self::assertResponseHeaderSame('content-type', 'application/json');
 			self::assertJsonEquals(
 				'{"status":"ok","message":"Updated"}',
@@ -179,7 +197,7 @@ final class AccountsControllerTest extends ApiTestCase
 		{
 			$this->getBrowserClient()->request('DELETE', '/api/v1/accounts/' . $account->getId(), [], [], ['HTTP_TOKEN' => $this->getApiToken()]);
 
-			self::assertResponseStatusCodeSame(200);
+			self::assertResponseStatusCodeSame(Response::HTTP_OK);
 			self::assertResponseHeaderSame('content-type', 'application/json');
 			self::assertJsonEquals(
 				'{"status":"ok","message":"Deleted"}',
