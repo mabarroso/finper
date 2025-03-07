@@ -251,7 +251,7 @@
 			"response": []
 		},
 		{
-			"name": "Login",
+			"name": "Auth Login",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -295,6 +295,54 @@
 						"v1",
 						"auth",
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth RefreshToken",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();",
+							"pm.collectionVariables.set(\"TOKEN\", response.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "TOKEN",
+						"value": "{{TOKEN}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "localhost/api/v1/auth/refreshToken",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"refreshToken"
 					]
 				}
 			},
