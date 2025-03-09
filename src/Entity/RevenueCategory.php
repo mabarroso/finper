@@ -19,6 +19,10 @@ class RevenueCategory
 	#[ORM\Column(length: 50, nullable: true)]
 	private ?string $Name = null;
 
+    #[ORM\ManyToOne(inversedBy: 'revenueCategories')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
 	public function getId(): ?int
 	{
 		return $this->id;
@@ -47,4 +51,16 @@ class RevenueCategory
 
 		return $this;
 	}
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 }
