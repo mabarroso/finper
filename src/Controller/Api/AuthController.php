@@ -16,13 +16,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class AuthController extends AbstractAuthBaseController
 {
-	private EntityManagerInterface $entityManager;
-
-	public function __construct(EntityManagerInterface $EntityManager)
-	{
-		$this->entityManager = $EntityManager;
-	}
-
 	#[Route('/api/v{_version}/auth/login', requirements: ['_version' => '1'], methods: ['POST'])]
 	public function create(Request $request, UserPasswordHasherInterface $passwordHasher, #[MapRequestPayload] LoginDto $dto): JsonResponse
 	{

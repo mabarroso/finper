@@ -7,9 +7,10 @@ use App\Entity\Revenue;
 use App\Entity\RevenueCategory;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class RevenueFixtures extends Fixture
+class RevenueFixtures extends Fixture implements DependentFixtureInterface
 {
 	public const REFERENCE = 'Revenue';
 

@@ -19,6 +19,10 @@ class Account
     #[ORM\Column(length: 24, nullable: true)]
     private ?string $iban = null;
 
+    #[ORM\ManyToOne(inversedBy: 'accounts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +48,18 @@ class Account
     public function setIban(?string $iban): static
     {
         $this->iban = $iban;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

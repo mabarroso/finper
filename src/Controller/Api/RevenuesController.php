@@ -2,7 +2,7 @@
 
 namespace App\Controller\Api;
 
-use Aaccountspp\Entity\Revenue;
+use App\Entity\Revenue;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,14 +10,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class RevenuesController extends AbstractAuthBaseController
 {
-	private EntityManagerInterface $entityManager;
-
-
-	public function __construct(EntityManagerInterface $EntityManager)
-	{
-		$this->entityManager = $EntityManager;
-	}
-
 	#[Route('/api/v{_version}/revenues', requirements: ['_version' => '1'], methods: ['GET'])]
 	public function index(): JsonResponse
 	{

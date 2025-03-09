@@ -45,11 +45,7 @@ abstract class ApiTestCase extends WebTestCase
 	public function getApiToken(int $userId = null, string $date = null, string $expiration = null): string
 	{
 		if (!$userId) {
-			$user = $this->getEntityManager()->getRepository(User::class)->findOneBy(["email" => 'demo@mailinator.com']);
-			if (!$user) {
-				return self::fail('No user for test found');
-			}
-			$userId = $user->getId();
+			$userId = $this->getUser()->getId();
 		}
 
 		$date = $date ?? date_create(date('Y-m-d'));
@@ -64,5 +60,10 @@ abstract class ApiTestCase extends WebTestCase
 		];
 
 		return JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS512');
+	}
+
+	protected function getUser(): User
+	{
+		return $this->getEntityManager()->getRepository(User::class)->findOneBy(["email" => 'demo@mailinator.com']);
 	}
 }

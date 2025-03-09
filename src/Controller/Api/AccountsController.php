@@ -13,12 +13,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class AccountsController extends AbstractAuthBaseController
 {
-	private EntityManagerInterface $entityManager;
-
-	public function __construct(EntityManagerInterface $EntityManager)
-	{
-		$this->entityManager = $EntityManager;
-	}
 
 	#[Route('/api/v{_version}/accounts', requirements: ['_version' => '1'], methods: ['GET'])]
 	public function index(): JsonResponse
@@ -61,6 +55,7 @@ final class AccountsController extends AbstractAuthBaseController
 		}
 
 		$account = new Account();
+		$account->setUser($this->getCurrentUser());
 		$account->setName($dto->name);
 		$account->setIban($dto->iban);
 		$this->entityManager->persist($account);

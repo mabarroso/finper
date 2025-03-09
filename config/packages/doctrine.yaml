@@ -26,7 +26,10 @@ doctrine:
                 alias: App
         controller_resolver:
             auto_mapping: false
-
+        filters:
+          user_filter:
+            class: App\Doctrine\Filter\UserFilter
+            enabled: true
 when@test:
     doctrine:
         dbal:

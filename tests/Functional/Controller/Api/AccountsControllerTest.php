@@ -15,7 +15,7 @@ final class AccountsControllerTest extends ApiTestCase
 		self::assertResponseIsSuccessful();
 		self::assertResponseHeaderSame('content-type', 'application/json');
 		self::assertJsonEquals(
-			'[{"id":2,"name":"Bank 2","iban":"*5678"},{"id":1,"name":"Bank 1","iban":"*1234"}]',
+			'[{"id":3,"name":"Bank 2","iban":"*5678"},{"id":2,"name":"Bank 1","iban":"*1234"},{"id":1,"name":"Cash","iban":"cash"}]',
 			$this->getBrowserClient()->getResponse()->getContent());
 	}
 
@@ -26,7 +26,7 @@ final class AccountsControllerTest extends ApiTestCase
 		self::assertResponseIsSuccessful();
 		self::assertResponseHeaderSame('content-type', 'application/json');
 		self::assertJsonEquals(
-			'{"id":2,"name":"Bank 2","iban":"*5678"}',
+			'{"id":2,"name":"Bank 1","iban":"*1234"}',
 			$this->getBrowserClient()->getResponse()->getContent());
 	}
 
@@ -159,6 +159,7 @@ final class AccountsControllerTest extends ApiTestCase
 		// Create test account
 		{
 			$account = new Account();
+			$account->setUser($this->getUser());
 			$account->setName('To update');
 			$account->setIban('1234');
 			$this->getEntityManager()->persist($account);
@@ -187,6 +188,7 @@ final class AccountsControllerTest extends ApiTestCase
 		// Create test account
 		{
 			$account = new Account();
+			$account->setUser($this->getUser());
 			$account->setName('To delete');
 			$account->setIban('1234');
 			$this->getEntityManager()->persist($account);

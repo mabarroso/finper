@@ -10,13 +10,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class RevenueCategoriesController extends AbstractAuthBaseController
 {
-	private EntityManagerInterface $entityManager;
-
-	public function __construct(EntityManagerInterface $EntityManager)
-	{
-		$this->entityManager = $EntityManager;
-	}
-
 	#[Route('/api/v{_version}/revenue/categories', requirements: ['_version' => '1'], methods: ['GET'])]
 	public function index(): JsonResponse
 	{

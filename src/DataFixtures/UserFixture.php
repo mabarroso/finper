@@ -11,9 +11,10 @@ class UserFixture extends Fixture
 {
 	public const REFERENCE = 'User';
 	private array $accounts = [
-		['id' => 1, 'email' => 'demo@mailinator.com', 'name' => 'Demo', 'password' => 'demo', 'roles' => [User::ROLE_USER]],
-		['id' => 2, 'email' => 'one@mailinator.com', 'name' => 'One', 'password' => 'one', 'roles' => [User::ROLE_USER]],
-		['id' => 3, 'email' => 'two@mailinator.com', 'name' => 'Two', 'password' => 'two', 'roles' => [User::ROLE_USER]],
+		['id' => 1, 'email' => 'no_email', 'name' => 'General', 'password' => 'no_password', 'roles' => [User::PUBLIC_ACCESS]],
+		['id' => 2, 'email' => 'demo@mailinator.com', 'name' => 'Demo', 'password' => 'demo', 'roles' => [User::ROLE_USER]],
+		['id' => 3, 'email' => 'one@mailinator.com', 'name' => 'One', 'password' => 'one', 'roles' => [User::ROLE_USER]],
+		['id' => 4, 'email' => 'two@mailinator.com', 'name' => 'Two', 'password' => 'two', 'roles' => [User::ROLE_USER]],
 	];
 
 	private UserPasswordHasherInterface $passwordHasher;
