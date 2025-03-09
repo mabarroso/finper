@@ -34,6 +34,10 @@ class Revenue
     #[ORM\JoinColumn(nullable: false)]
     private ?Account $Account = null;
 
+    #[ORM\ManyToOne(inversedBy: 'revenues')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +111,18 @@ class Revenue
     public function setAccount(?Account $Account): static
     {
         $this->Account = $Account;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

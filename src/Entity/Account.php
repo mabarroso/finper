@@ -23,6 +23,14 @@ class Account
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+	public function toArray()
+	{
+		return [
+			'id'   => $this->getId(),
+			'name' => $this->getName()
+		];
+	}
+
     public function getId(): ?int
     {
         return $this->id;

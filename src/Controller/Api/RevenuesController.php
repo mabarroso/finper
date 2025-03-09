@@ -18,10 +18,14 @@ final class RevenuesController extends AbstractAuthBaseController
 		$revenues = $this->entityManager->getRepository(Revenue::class)->findBy([], ['id' => 'desc']);
 		foreach ($revenues as $revenue) {
 			$data[] = [
-				'id'          => $revenue->getId(),
-				'name'        => $revenue->getName(),
-				'category'    => $revenue->getRevenueCategory()->getRevenueCategory()->getName(),
-				'subcategory' => $revenue->getRevenueCategory()->getName(),
+				'id'            => $revenue->getId(),
+				'name'          => $revenue->getName(),
+				'category'      => $revenue->getRevenueCategory()->getRevenueCategory()->toArray(),
+				'subcategory'   => $revenue->getRevenueCategory()->toArray(),
+				'amount'        => $revenue->getAmount(),
+				'account'       => $revenue->getAccount()->toArray(),
+				'operationDate' => $revenue->getOperationDate()->format('Y-m-d'),
+				'checkedDate'   => $revenue->getCheckedDate()->format('Y-m-d'),
 			];
 		}
 		return $this->json($data, Response::HTTP_OK);

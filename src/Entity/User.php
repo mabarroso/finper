@@ -53,10 +53,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: RevenueCategory::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $revenueCategories;
 
+    /**
+     * @var Collection<int, Revenue>
+     */
+    #[ORM\OneToMany(targetEntity: Revenue::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $revenues;
+
     public function __construct()
     {
         $this->accounts = new ArrayCollection();
         $this->revenueCategories = new ArrayCollection();
+        $this->revenues = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -200,6 +207,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($revenueCategory->getUser() === $this) {
                 $revenueCategory->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Revenue>
+     */
+    public function getRevenues(): Collection
+    {
+        return $this->revenues;
+    }
+
+    public function addRevenue(Revenue $revenue): static
+    {
+        if (!$this->revenues->contains($revenue)) {
+            $this->revenues->add($revenue);
+            $revenue->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRevenue(Revenue $revenue): static
+    {
+        if ($this->revenues->removeElement($revenue)) {
+            // set the owning side to null (unless already changed)
+            if ($revenue->getUser() === $this) {
+                $revenue->setUser(null);
             }
         }
 
