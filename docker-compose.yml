@@ -2,6 +2,7 @@
 version: '3.2'
 services:
   db:
+    container_name: finper-backend-db-1
     image: mysql:9.2
     restart: always
     expose:
@@ -18,6 +19,7 @@ services:
       MYSQL_PASSWORD: finper
 
   www:
+    container_name: finper-backend-www-1
     depends_on:
       - db
     build: ./docker/php-82-apache-xdebug-32
