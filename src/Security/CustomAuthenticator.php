@@ -43,12 +43,12 @@ class CustomAuthenticator extends AbstractAuthenticator
 			$apiTokenDecoded = JWT::decode($apiToken, new Key($_ENV['JWT_SECRET'], 'HS512'));
 			$user = $this->entityManager->getRepository(User::class)->findOneBy(['id' => $apiTokenDecoded->aud]);
 			if (!$user) {
-				return new Passport(new UserBadge(''), new PasswordCredentials(''));
+				return new Passport(new UserBadge('GUEST'), new PasswordCredentials(''));
 			} else {
 				return new SelfValidatingPassport(new UserBadge($user->getEmail()));
 			}
 		} catch (Throwable $th) {
-			return new Passport(new UserBadge(''), new PasswordCredentials(''));
+			return new Passport(new UserBadge('GUEST'), new PasswordCredentials(''));
 		}
 	}
 
